@@ -12,14 +12,12 @@ import UIKit
 extension UdacityClient {
     
     func authenticateWith(_ username: String, _ password: String, authCompletionHandler: @escaping (_ success: Bool, _ errorString: String?)->Void) {
-        var request = URLRequest(url: URL(string: "https://www.udacity.com/api/session")!)
+        var request = URLRequest(url: URL(string: Constants.AuthorizationURL)!)
         
         request.httpMethod = "POST"
         request.addValue("application/json", forHTTPHeaderField: "Accept")
         request.addValue("application/json", forHTTPHeaderField: "Content-Type")
         request.httpBody = "{\"udacity\": {\"username\": \"\(username)\", \"password\": \"\(password)\"}}".data(using: .utf8)
-        
-        let session = URLSession.shared
         
         let task = session.dataTask(with: request) { data, response, error in
             if error != nil {

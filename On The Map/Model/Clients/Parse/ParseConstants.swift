@@ -1,33 +1,31 @@
 //
-//  UdacityConstants.swift
+//  ParseConstants.swift
 //  On The Map
 //
-//  Created by Vineet Joshi on 2/10/18.
+//  Created by Vineet Joshi on 2/11/18.
 //  Copyright © 2018 Vineet Joshi. All rights reserved.
 //
 
 import Foundation
 
-// MARK: - UdacityClient (Constants)
-
-extension UdacityClient {
+extension ParseClient {
     
     // MARK: Constants
     struct Constants {
-        // MARK: API Key
-        static let ApiKey = "3f8b54020c01ca955d794509d39e94fe" /*"YOUR_API_KEY_HERE"*/
+        // MARK: Required Keys
+        static let ApplicationID = "QrX47CA9cyuGewLdsL7o5Eb8iug6Em8ye0dnAbIr"
+        static let RESTAPIKey = "QuWThTdiRmTux3YaDseUSEpUKo7aBYM737yKd4gY"
         // MARK: URLs
         static let ApiScheme = "https"
         static let ApiHost = "api.themoviedb.org"
         static let ApiPath = "/api"
-        static let AuthorizationURL = "https://www.udacity.com/api/session"
-        static let AccountURL = "https://www.themoviedb.org/account/"
+        static let BaseURL = "https://parse.udacity.com/parse/classes"
     }
     
     // MARK: Methods
     struct Methods {
         // MARK: Account
-        static let Account = "/account"
+        static let StudentLocation = "/StudentLocation"
         static let AccountIDFavoriteMovies = "/account/{id}/favorite/movies"
         static let AccountIDFavorite = "/account/{id}/favorite"
         static let AccountIDWatchlistMovies = "/account/{id}/watchlist/movies"

@@ -11,5 +11,7 @@ import UIKit
 class ListTableViewCell: UITableViewCell {
     
     @IBOutlet weak var nameLabel: UILabel!
+    @IBOutlet weak var mapStringLabel: UILabel!
+    @IBOutlet weak var mediaLinkLabel: UILabel!
     
 }

@@ -54,7 +54,6 @@ class LoginViewController: UIViewController {
             let alert = UIAlertController(title: "Empty Login Field", message: "Please enter your username and password.", preferredStyle: .alert)
             alert.addAction(UIAlertAction(title: NSLocalizedString("OK", comment: "Default action"), style: .`default`, handler: { _ in
                 self.usernameField.becomeFirstResponder()
-                NSLog("The \"Empty Username or Password\" alert occured.")
             }))
             self.present(alert, animated: true, completion: nil)
         } else {
@@ -77,9 +76,7 @@ class LoginViewController: UIViewController {
     
     func invalidLogin() {
         let alert = UIAlertController(title: "Invalid Login", message: "The username and/or password you entered was incorrect.", preferredStyle: .alert)
-        alert.addAction(UIAlertAction(title: NSLocalizedString("OK", comment: "Default action"), style: .`default`, handler: { _ in
-            NSLog("The \"Invalid Login\" alert occured.")
-        }))
+        alert.addAction(UIAlertAction(title: NSLocalizedString("OK", comment: "Default action"), style: .`default`, handler: nil))
         self.present(alert, animated: true, completion: nil)
     }
     

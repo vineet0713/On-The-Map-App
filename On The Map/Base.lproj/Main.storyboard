@@ -172,38 +172,57 @@
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                         <prototypes>
-                            <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="default" indentationWidth="10" reuseIdentifier="listCell" rowHeight="72" id="d5b-eD-J4i" customClass="ListTableViewCell" customModule="On_The_Map" customModuleProvider="target">
-                                <rect key="frame" x="0.0" y="28" width="375" height="72"/>
+                            <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="default" indentationWidth="10" reuseIdentifier="listCell" rowHeight="120" id="d5b-eD-J4i" customClass="ListTableViewCell" customModule="On_The_Map" customModuleProvider="target">
+                                <rect key="frame" x="0.0" y="28" width="375" height="120"/>
                                 <autoresizingMask key="autoresizingMask"/>
                                 <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" preservesSuperviewLayoutMargins="YES" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="d5b-eD-J4i" id="1zp-F4-oCn">
-                                    <rect key="frame" x="0.0" y="0.0" width="375" height="71.5"/>
+                                    <rect key="frame" x="0.0" y="0.0" width="375" height="119.5"/>
                                     <autoresizingMask key="autoresizingMask"/>
                                     <subviews>
-                                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Name" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="BgW-wm-MO2">
-                                            <rect key="frame" x="74" y="11" width="285" height="50"/>
-                                            <fontDescription key="fontDescription" type="system" pointSize="21"/>
-                                            <nil key="textColor"/>
-                                            <nil key="highlightedColor"/>
-                                        </label>
                                         <imageView userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="icon_pin" translatesAutoresizingMaskIntoConstraints="NO" id="Fhq-ip-CMY">
-                                            <rect key="frame" x="16" y="11" width="50" height="50"/>
+                                            <rect key="frame" x="16" y="11" width="98" height="98"/>
                                             <constraints>
-                                                <constraint firstAttribute="width" constant="50" id="Bnz-WC-uwo"/>
+                                                <constraint firstAttribute="width" constant="98" id="lDT-12-pTh"/>
                                             </constraints>
                                         </imageView>
+                                        <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" distribution="fillEqually" translatesAutoresizingMaskIntoConstraints="NO" id="nT7-O2-ThF">
+                                            <rect key="frame" x="122" y="11" width="237" height="98"/>
+                                            <subviews>
+                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Name" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="eFg-re-GWT">
+                                                    <rect key="frame" x="0.0" y="0.0" width="237" height="32.5"/>
+                                                    <fontDescription key="fontDescription" type="system" pointSize="21"/>
+                                                    <nil key="textColor"/>
+                                                    <nil key="highlightedColor"/>
+                                                </label>
+                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Map String" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Uck-rj-K77">
+                                                    <rect key="frame" x="0.0" y="32.5" width="237" height="33"/>
+                                                    <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                                    <nil key="textColor"/>
+                                                    <nil key="highlightedColor"/>
+                                                </label>
+                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Media Link" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="D3u-eD-X57">
+                                                    <rect key="frame" x="0.0" y="65.5" width="237" height="32.5"/>
+                                                    <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                                    <nil key="textColor"/>
+                                                    <nil key="highlightedColor"/>
+                                                </label>
+                                            </subviews>
+                                        </stackView>
                                     </subviews>
                                     <constraints>
-                                        <constraint firstItem="Fhq-ip-CMY" firstAttribute="top" secondItem="BgW-wm-MO2" secondAttribute="top" id="C8v-1N-zcz"/>
-                                        <constraint firstItem="BgW-wm-MO2" firstAttribute="leading" secondItem="Fhq-ip-CMY" secondAttribute="trailing" constant="8" symbolic="YES" id="DO6-1I-QsF"/>
-                                        <constraint firstItem="BgW-wm-MO2" firstAttribute="trailing" secondItem="1zp-F4-oCn" secondAttribute="trailingMargin" id="FjR-of-C3q"/>
-                                        <constraint firstItem="Fhq-ip-CMY" firstAttribute="bottom" secondItem="BgW-wm-MO2" secondAttribute="bottom" id="KtE-Hu-Pi4"/>
-                                        <constraint firstItem="Fhq-ip-CMY" firstAttribute="leading" secondItem="1zp-F4-oCn" secondAttribute="leadingMargin" id="QfM-QC-lej"/>
-                                        <constraint firstItem="Fhq-ip-CMY" firstAttribute="bottom" secondItem="1zp-F4-oCn" secondAttribute="bottomMargin" id="Uw9-wF-Rnh"/>
-                                        <constraint firstItem="Fhq-ip-CMY" firstAttribute="top" secondItem="1zp-F4-oCn" secondAttribute="topMargin" id="rXt-fn-zCv"/>
+                                        <constraint firstItem="Fhq-ip-CMY" firstAttribute="top" secondItem="nT7-O2-ThF" secondAttribute="top" id="6xJ-kc-QMa"/>
+                                        <constraint firstItem="Fhq-ip-CMY" firstAttribute="top" secondItem="1zp-F4-oCn" secondAttribute="topMargin" id="ANm-5Z-SGJ"/>
+                                        <constraint firstItem="Fhq-ip-CMY" firstAttribute="bottom" secondItem="1zp-F4-oCn" secondAttribute="bottomMargin" id="FHl-qt-Hyl"/>
+                                        <constraint firstItem="nT7-O2-ThF" firstAttribute="leading" secondItem="Fhq-ip-CMY" secondAttribute="trailing" constant="8" symbolic="YES" id="MsG-7n-2AO"/>
+                                        <constraint firstItem="Fhq-ip-CMY" firstAttribute="leading" secondItem="1zp-F4-oCn" secondAttribute="leadingMargin" id="aYm-fJ-7Bv"/>
+                                        <constraint firstItem="Fhq-ip-CMY" firstAttribute="bottom" secondItem="nT7-O2-ThF" secondAttribute="bottom" id="vGm-mt-wyi"/>
+                                        <constraint firstItem="nT7-O2-ThF" firstAttribute="trailing" secondItem="1zp-F4-oCn" secondAttribute="trailingMargin" id="ziq-5P-DaW"/>
                                     </constraints>
                                 </tableViewCellContentView>
                                 <connections>
-                                    <outlet property="nameLabel" destination="BgW-wm-MO2" id="B9V-uG-COS"/>
+                                    <outlet property="mapStringLabel" destination="Uck-rj-K77" id="m5Q-am-RCX"/>
+                                    <outlet property="mediaLinkLabel" destination="D3u-eD-X57" id="r7U-sJ-5Y4"/>
+                                    <outlet property="nameLabel" destination="eFg-re-GWT" id="IuL-CL-7gO"/>
                                 </connections>
                             </tableViewCell>
                         </prototypes>
