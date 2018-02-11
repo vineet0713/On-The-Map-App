@@ -21,13 +21,6 @@ class LoginViewController: UIViewController {
     
     // MARK: Life Cycle
     
-    override func viewDidLoad() {
-        super.viewDidLoad()
-        // Do any additional setup after loading the view, typically from a nib.
-        
-        
-    }
-    
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         
@@ -58,15 +51,36 @@ class LoginViewController: UIViewController {
         self.view.frame.origin.y = 0
         
         if (usernameField.text?.isEmpty)! || (passwordField.text?.isEmpty)! {
-            let alert = UIAlertController(title: "Empty Username or Password", message: "Please enter your username and password.", preferredStyle: .alert)
+            let alert = UIAlertController(title: "Empty Login Field", message: "Please enter your username and password.", preferredStyle: .alert)
             alert.addAction(UIAlertAction(title: NSLocalizedString("OK", comment: "Default action"), style: .`default`, handler: { _ in
                 self.usernameField.becomeFirstResponder()
                 NSLog("The \"Empty Username or Password\" alert occured.")
             }))
             self.present(alert, animated: true, completion: nil)
         } else {
-            
+            UdacityClient.sharedInstance().authenticateWith(usernameField.text!, passwordField.text!, authCompletionHandler: { (success, errorString) in
+                performUIUpdatesOnMain {
+                    if success {
+                        self.completeLogin()
+                    } else {
+                        print(errorString!)
+                        self.invalidLogin()
+                    }
+                }
+            })
         }
+    }
+    
+    func completeLogin() {
+        performSegue(withIdentifier: "loginComplete", sender: self)
+    }
+    
+    func invalidLogin() {
+        let alert = UIAlertController(title: "Invalid Login", message: "The username and/or password you entered was incorrect.", preferredStyle: .alert)
+        alert.addAction(UIAlertAction(title: NSLocalizedString("OK", comment: "Default action"), style: .`default`, handler: { _ in
+            NSLog("The \"Invalid Login\" alert occured.")
+        }))
+        self.present(alert, animated: true, completion: nil)
     }
     
 }
