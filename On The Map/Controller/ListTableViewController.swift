@@ -25,6 +25,22 @@ class ListTableViewController: UITableViewController {
     
     // MARK: IBActions
     
+    @IBAction func logout(_ sender: Any) {
+        let alert = UIAlertController(title: "Logout", message: "Are you sure you want to logout?", preferredStyle: .alert)
+        alert.addAction(UIAlertAction(title: "Yes", style: .default, handler: { (action) in
+            UdacityClient.sharedInstance().deleteSession(completionHandler: { (success, errorString) in
+                if success {
+                    self.dismiss(animated: true, completion: nil)
+                } else {
+                    print(errorString!)
+                    self.showAlert(title: "Logout Failed", message: "You were unable to logout.")
+                }
+            })
+        }))
+        alert.addAction(UIAlertAction(title: "No", style: .cancel, handler: nil))
+        self.present(alert, animated: true, completion: nil)
+    }
+    
     @IBAction func addPin(_ sender: Any) {
         if ParseClient.sharedInstance().userAlreadyPostedAPin() {
             let alert = UIAlertController(title: "Duplicate Pin", message: dupPinMsg, preferredStyle: .alert)
@@ -42,7 +58,13 @@ class ListTableViewController: UITableViewController {
         updateLocations()
     }
     
-    // MARK: Helper Function
+    // MARK: Helper Functions
+    
+    func showAlert(title: String, message: String) {
+        let alert = UIAlertController(title: title, message: message, preferredStyle: .alert)
+        alert.addAction(UIAlertAction(title: NSLocalizedString("OK", comment: "Default action"), style: .`default`, handler: nil))
+        present(alert, animated: true, completion: nil)
+    }
     
     func updateLocations() {
         ParseClient.sharedInstance().getLocations { (success, errorString) in
@@ -80,9 +102,7 @@ class ListTableViewController: UITableViewController {
         if let url = URL(string: urlString), UIApplication.shared.canOpenURL(url) {
             UIApplication.shared.open(url, options: [:])
         } else {
-            let alert = UIAlertController(title: "Invalid URL", message: "This student's media URL is invalid.", preferredStyle: .alert)
-            alert.addAction(UIAlertAction(title: NSLocalizedString("OK", comment: "Default action"), style: .`default`, handler: nil))
-            present(alert, animated: true, completion: nil)
+            showAlert(title: "Invalid URL", message: "This student's media URL is invalid.")
         }
     }
     

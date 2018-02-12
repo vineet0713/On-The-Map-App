@@ -7,6 +7,7 @@
         <deployment identifier="iOS"/>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="13772"/>
         <capability name="Constraints to layout margins" minToolsVersion="6.0"/>
+        <capability name="Navigation items with more than one left or right bar item" minToolsVersion="7.0"/>
         <capability name="Safe area layout guides" minToolsVersion="9.0"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
@@ -38,13 +39,13 @@
                                         <nil key="textColor"/>
                                         <nil key="highlightedColor"/>
                                     </label>
-                                    <textField opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="sVb-hE-fiP">
+                                    <textField opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="Username" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="sVb-hE-fiP">
                                         <rect key="frame" x="0.0" y="41.5" width="343" height="31.5"/>
                                         <nil key="textColor"/>
                                         <fontDescription key="fontDescription" type="system" pointSize="14"/>
                                         <textInputTraits key="textInputTraits" keyboardType="emailAddress" textContentType="username"/>
                                     </textField>
-                                    <textField opaque="NO" tag="1" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="eFI-89-w4o">
+                                    <textField opaque="NO" tag="1" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="Password" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="eFI-89-w4o">
                                         <rect key="frame" x="0.0" y="83" width="343" height="31.5"/>
                                         <nil key="textColor"/>
                                         <fontDescription key="fontDescription" type="system" pointSize="14"/>
@@ -144,16 +145,23 @@
                         <viewLayoutGuide key="safeArea" id="PPN-2J-ZEt"/>
                     </view>
                     <navigationItem key="navigationItem" title="On The Map" id="Cfl-q9-hF2">
-                        <barButtonItem key="leftBarButtonItem" image="icon_pin" id="erj-Ju-5jG">
+                        <barButtonItem key="leftBarButtonItem" title="Logout" id="ADe-BX-6VM">
                             <connections>
-                                <action selector="addPin:" destination="c24-su-dfd" id="HNW-P0-Sd9"/>
+                                <action selector="logout:" destination="c24-su-dfd" id="bPY-7L-VxQ"/>
                             </connections>
                         </barButtonItem>
-                        <barButtonItem key="rightBarButtonItem" image="icon_refresh" id="22P-QO-rLa">
-                            <connections>
-                                <action selector="refresh:" destination="c24-su-dfd" id="wYj-ET-KkQ"/>
-                            </connections>
-                        </barButtonItem>
+                        <rightBarButtonItems>
+                            <barButtonItem image="icon_refresh" id="22P-QO-rLa">
+                                <connections>
+                                    <action selector="refresh:" destination="c24-su-dfd" id="wYj-ET-KkQ"/>
+                                </connections>
+                            </barButtonItem>
+                            <barButtonItem image="icon_pin" id="erj-Ju-5jG">
+                                <connections>
+                                    <action selector="addPin:" destination="c24-su-dfd" id="HNW-P0-Sd9"/>
+                                </connections>
+                            </barButtonItem>
+                        </rightBarButtonItems>
                     </navigationItem>
                     <connections>
                         <outlet property="map" destination="rH5-pC-ndG" id="qRp-la-bSu"/>
@@ -335,16 +343,23 @@
                         </connections>
                     </tableView>
                     <navigationItem key="navigationItem" title="On The Map" id="pVp-mG-hUi">
-                        <barButtonItem key="leftBarButtonItem" image="icon_pin" id="iKJ-mb-dsx">
+                        <barButtonItem key="leftBarButtonItem" title="Logout" id="gSw-4I-AEj">
                             <connections>
-                                <action selector="addPin:" destination="8FE-pV-XNw" id="CLa-Dx-kA7"/>
+                                <action selector="logout:" destination="8FE-pV-XNw" id="pft-qZ-Z6i"/>
                             </connections>
                         </barButtonItem>
-                        <barButtonItem key="rightBarButtonItem" image="icon_refresh" id="gNJ-mI-bRT">
-                            <connections>
-                                <action selector="refresh:" destination="8FE-pV-XNw" id="eJi-30-0Qf"/>
-                            </connections>
-                        </barButtonItem>
+                        <rightBarButtonItems>
+                            <barButtonItem image="icon_refresh" id="gNJ-mI-bRT">
+                                <connections>
+                                    <action selector="refresh:" destination="8FE-pV-XNw" id="eJi-30-0Qf"/>
+                                </connections>
+                            </barButtonItem>
+                            <barButtonItem image="icon_pin" id="iKJ-mb-dsx">
+                                <connections>
+                                    <action selector="addPin:" destination="8FE-pV-XNw" id="CLa-Dx-kA7"/>
+                                </connections>
+                            </barButtonItem>
+                        </rightBarButtonItems>
                     </navigationItem>
                     <connections>
                         <segue destination="YVw-Ji-hsR" kind="presentation" identifier="listToAddPin" id="ouF-bS-SfE"/>
@@ -380,6 +395,6 @@
         <image name="logo-u" width="62" height="62"/>
     </resources>
     <inferredMetricsTieBreakers>
-        <segue reference="ugZ-gP-6oj"/>
+        <segue reference="ouF-bS-SfE"/>
     </inferredMetricsTieBreakers>
 </document>

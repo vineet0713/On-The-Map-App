@@ -40,6 +40,14 @@ class LoginViewController: UIViewController {
         }
     }
     
+    override func viewDidDisappear(_ animated: Bool) {
+        super.viewDidDisappear(animated)
+        
+        // after logout, clear both username and password fields
+        self.usernameField.text = ""
+        self.passwordField.text = ""
+    }
+    
     override var supportedInterfaceOrientations: UIInterfaceOrientationMask {
         return UIInterfaceOrientationMask.portrait
     }

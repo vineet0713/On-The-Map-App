@@ -141,4 +141,35 @@ extension UdacityClient {
         task.resume()
     }
     
+    // MARK: Logout Method
+    
+    func deleteSession(completionHandler: @escaping (_ success: Bool, _ errorString: String?)->Void) {
+        var request = URLRequest(url: udacityURLWithMethod(method: Methods.Session))
+        request.httpMethod = "DELETE"
+        var xsrfCookie: HTTPCookie? = nil
+        let sharedCookieStorage = HTTPCookieStorage.shared
+        for cookie in sharedCookieStorage.cookies! {
+            if cookie.name == "XSRF-TOKEN" { xsrfCookie = cookie }
+        }
+        if let xsrfCookie = xsrfCookie {
+            request.setValue(xsrfCookie.value, forHTTPHeaderField: "X-XSRF-TOKEN")
+        }
+        
+        let task = session.dataTask(with: request) { data, response, error in
+            if error != nil {
+                completionHandler(false, error?.localizedDescription)
+                return
+            }
+            
+            guard let statusCode = (response as? HTTPURLResponse)?.statusCode, (statusCode >= 200 && statusCode <= 299) else {
+                completionHandler(false, "Your request returned a status code other than 2xx.")
+                return
+            }
+            
+            completionHandler(true, nil)
+        }
+        
+        task.resume()
+    }
+    
 }
