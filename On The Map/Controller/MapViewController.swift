@@ -49,7 +49,7 @@ class MapViewController: UIViewController {
                     let currentAnnotations = self.map.annotations
                     self.map.removeAnnotations(currentAnnotations)
                     // adds the new annotations to the map:
-                    self.map.addAnnotations(ParseClient.sharedInstance().students)
+                    self.map.addAnnotations(SharedStudentData.sharedInstance().students)
                 } else {
                     print(errorString!)
                     self.showAlert(title: "Unable to Load", message: errorString!)

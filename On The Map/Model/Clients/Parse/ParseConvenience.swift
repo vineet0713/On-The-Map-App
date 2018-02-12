@@ -51,43 +51,13 @@ extension ParseClient {
                 return
             }
             
-            self.students = []
+            SharedStudentData.sharedInstance().students = []
             for student in arrayOfStudentDicts {
-                guard let first = student[JSONResponseKeys.FirstName] as? String, let last = student[JSONResponseKeys.LastName] as? String else {
-                    completionHandler(false, "Could not parse the first and last names from the student JSON.")
-                    return
-                }
-                guard let media = student[JSONResponseKeys.MediaURL] as? String else {
-                    completionHandler(false, "Could not parse the media URL from the student JSON.")
-                    return
-                }
-                guard let lat = student[JSONResponseKeys.Latitude] as? CLLocationDegrees else {
-                    completionHandler(false, "Could not parse the latitude from the student JSON.")
-                    return
-                }
-                guard let long = student[JSONResponseKeys.Longitude] as? CLLocationDegrees else {
-                    completionHandler(false, "Could not parse the longitude from the student JSON.")
-                    return
-                }
-                guard let objectId = student[JSONResponseKeys.ObjectID] as? String else {
-                    completionHandler(false, "Could not parse the object ID from the student JSON.")
-                    return
-                }
-                guard let uniqueKey = student[JSONResponseKeys.UniqueKey] as? String else {
-                    completionHandler(false, "Could not parse the unique key from the student JSON.")
-                    return
-                }
-                
-                let mapString: String?
-                if let string = student[JSONResponseKeys.MapString] as? String {
-                    mapString = string
+                if let studentAnnotation = MapPinAnnotation(studentDict: student) {
+                    SharedStudentData.sharedInstance().students.append(studentAnnotation)
                 } else {
-                    mapString = ""
+                    completionHandler(false, "Could not parse the data from the student JSON.")
                 }
-                
-                let studentTitle = "\(first) \(last)"
-                let studentCoor = CLLocationCoordinate2D(latitude: lat, longitude: long)
-                self.students.append(MapPinAnnotation(title: studentTitle, subtitle: media, coordinate: studentCoor, objectId: objectId, uniqueKey: uniqueKey, mapString: mapString))
             }
             
             completionHandler(true, nil)

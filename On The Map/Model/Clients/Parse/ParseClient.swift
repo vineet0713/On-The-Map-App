@@ -23,9 +23,6 @@ class ParseClient: NSObject {
     // shared session
     var session = URLSession.shared
     
-    // stored data
-    var students: [MapPinAnnotation] = []
-    
     // MARK: Initializers
     
     override init() {
@@ -89,7 +86,7 @@ class ParseClient: NSObject {
     
     // checks if the user has already posted a pin
     func userAlreadyPostedAPin() -> Bool {
-        for student in students {
+        for student in SharedStudentData.sharedInstance().students {
             if student.uniqueKey! == uniqueKey! {
                 putPathExtension = "/\(student.objectId!)"
                 updateLocationHTTPMethod = "PUT"

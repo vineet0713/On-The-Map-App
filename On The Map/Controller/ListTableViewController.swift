@@ -59,24 +59,25 @@ class ListTableViewController: UITableViewController {
     // MARK: - Table view data source
     
     override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        // #warning Incomplete implementation, return the number of rows
-        return ParseClient.sharedInstance().students.count
+        return SharedStudentData.sharedInstance().students.count
     }
     
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: reuseIdentifier, for: indexPath) as! ListTableViewCell
-        let sharedParseClient = ParseClient.sharedInstance()
+        let student = SharedStudentData.sharedInstance().students[indexPath.row]
         
-        cell.nameLabel.text = sharedParseClient.students[indexPath.row].title
-        cell.mapStringLabel.text = sharedParseClient.students[indexPath.row].mapString
-        cell.mediaLinkLabel.text = sharedParseClient.students[indexPath.row].subtitle
+        cell.nameLabel.text = student.title
+        cell.mapStringLabel.text = student.mapString
+        cell.mediaLinkLabel.text = student.subtitle
         
         return cell
     }
     
     override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         tableView.deselectRow(at: indexPath, animated: true)
-        if let url = URL(string: ParseClient.sharedInstance().students[indexPath.row].subtitle!), UIApplication.shared.canOpenURL(url) {
+        
+        let urlString = SharedStudentData.sharedInstance().students[indexPath.row].subtitle!
+        if let url = URL(string: urlString), UIApplication.shared.canOpenURL(url) {
             UIApplication.shared.open(url, options: [:])
         } else {
             let alert = UIAlertController(title: "Invalid URL", message: "This student's media URL is invalid.", preferredStyle: .alert)

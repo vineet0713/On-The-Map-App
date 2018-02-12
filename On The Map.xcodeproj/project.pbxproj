@@ -26,6 +26,7 @@
 		65E51E29202FDA3000C7A2CD /* MapViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 65E51E28202FDA3000C7A2CD /* MapViewController.swift */; };
 		65E51E2B202FDA6100C7A2CD /* ListTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 65E51E2A202FDA6100C7A2CD /* ListTableViewController.swift */; };
 		65E51E2D202FDD4600C7A2CD /* ListTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 65E51E2C202FDD4600C7A2CD /* ListTableViewCell.swift */; };
+		65E94DB02032383C0056A572 /* SharedStudentData.swift in Sources */ = {isa = PBXBuildFile; fileRef = 65E94DAF2032383C0056A572 /* SharedStudentData.swift */; };
 		65FEC11D20310D900001B316 /* AddPinViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 65FEC11C20310D900001B316 /* AddPinViewController.swift */; };
 /* End PBXBuildFile section */
 
@@ -72,6 +73,7 @@
 		65E51E28202FDA3000C7A2CD /* MapViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MapViewController.swift; sourceTree = "<group>"; };
 		65E51E2A202FDA6100C7A2CD /* ListTableViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ListTableViewController.swift; sourceTree = "<group>"; };
 		65E51E2C202FDD4600C7A2CD /* ListTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ListTableViewCell.swift; sourceTree = "<group>"; };
+		65E94DAF2032383C0056A572 /* SharedStudentData.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SharedStudentData.swift; sourceTree = "<group>"; };
 		65FEC11C20310D900001B316 /* AddPinViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddPinViewController.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -168,6 +170,7 @@
 			isa = PBXGroup;
 			children = (
 				65E51E1F202FC09900C7A2CD /* Clients */,
+				65E94DAF2032383C0056A572 /* SharedStudentData.swift */,
 			);
 			path = Model;
 			sourceTree = "<group>";
@@ -364,6 +367,7 @@
 				65CB7CE02030B6BC005A71CD /* ParseConvenience.swift in Sources */,
 				65E51DEF202F9F9800C7A2CD /* LoginViewController.swift in Sources */,
 				65E51E23202FC16100C7A2CD /* UdacityConstants.swift in Sources */,
+				65E94DB02032383C0056A572 /* SharedStudentData.swift in Sources */,
 				65CB7CDC2030B4A5005A71CD /* ParseConstants.swift in Sources */,
 				65E51E2B202FDA6100C7A2CD /* ListTableViewController.swift in Sources */,
 				65FEC11D20310D900001B316 /* AddPinViewController.swift in Sources */,
