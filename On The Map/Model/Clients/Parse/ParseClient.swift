@@ -44,11 +44,19 @@ class ParseClient: NSObject {
     // MARK: Helper Functions
     
     // create a URL from parameters
-    func parseURLWithMethod(method: String) -> URL {
+    func constructParseURL(method: String, parameters: [String:Any]?) -> URL {
         var components = URLComponents()
         components.scheme = Constants.ApiScheme
         components.host = Constants.ApiHost
         components.path = Constants.ApiPath + method
+        
+        if let parameters = parameters {
+            components.queryItems = [URLQueryItem]()
+            for (key, value) in parameters {
+                let queryItem = URLQueryItem(name: key, value: "\(value)")
+                components.queryItems!.append(queryItem)
+            }
+        }
         
         return components.url!
     }

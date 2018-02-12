@@ -29,6 +29,19 @@ extension ParseClient {
         static let StudentLocation = "/StudentLocation"
     }
     
+    // MARK: Parameter Keys
+    struct ParameterKeys {
+        static let Limit = "limit"
+        static let Order = "order"
+    }
+    
+    // MARK: Parameter Values
+    struct ParameterValues {
+        static let GivenLimit = 100
+        static let oldestToNewestAscending = "updatedAt"
+        static let newestToOldestDescending = "-updatedAt"
+    }
+    
     // MARK: JSON Response Keys
     struct JSONResponseKeys {
         // MARK: Location

@@ -14,7 +14,11 @@ extension ParseClient {
     // MARK: Get Locations Method
     
     func getLocations(completionHandler: @escaping (_ success: Bool, _ errorString: String?)->Void) {
-        var request = URLRequest(url: parseURLWithMethod(method: Methods.Classes + Methods.StudentLocation))
+        let method = Methods.Classes + Methods.StudentLocation
+        let parameters: [String:Any] = [ParameterKeys.Limit: ParameterValues.GivenLimit,
+                                        ParameterKeys.Order: ParameterValues.newestToOldestDescending]
+        
+        var request = URLRequest(url: constructParseURL(method: method, parameters: parameters))
         request.addValue(Constants.ApplicationID, forHTTPHeaderField: "X-Parse-Application-Id")
         request.addValue(Constants.RESTAPIKey, forHTTPHeaderField: "X-Parse-REST-API-Key")
         
@@ -95,7 +99,10 @@ extension ParseClient {
     // MARK: POST/PUT Method for Locations
     
     func updateLocation(httpBodyDictValues: [String], completionHandler: @escaping (_ success: Bool, _ errorString: String?)->Void) {
-        var request = URLRequest(url: parseURLWithMethod(method: Methods.Classes + Methods.StudentLocation + putPathExtension!))
+        let method = Methods.Classes + Methods.StudentLocation + putPathExtension!
+        // no parameters to pass!
+        
+        var request = URLRequest(url: constructParseURL(method: method, parameters: nil))
         request.httpMethod = updateLocationHTTPMethod!
         request.addValue(Constants.ApplicationID, forHTTPHeaderField: "X-Parse-Application-Id")
         request.addValue(Constants.RESTAPIKey, forHTTPHeaderField: "X-Parse-REST-API-Key")
