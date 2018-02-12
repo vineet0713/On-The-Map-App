@@ -17,11 +17,14 @@ class ParseClient: NSObject {
     var firstName: String? = nil
     var lastName: String? = nil
     
+    var putPathExtension: String? = nil
+    var updateLocationHTTPMethod: String? = nil
+    
     // shared session
     var session = URLSession.shared
     
     // data
-    static var students: [MapPinAnnotation] = []
+    var students: [MapPinAnnotation] = []
     
     // MARK: Initializers
     
@@ -46,6 +49,32 @@ class ParseClient: NSObject {
         components.path = Constants.ApiPath + method
         
         return components.url!
+    }
+    
+    // create a HTTP Body from parameters
+    func getHTTPBody(values: [String]) -> Data? {
+        var httpBody = "{"
+        
+        for i in 0..<values.count {
+            httpBody += ("\"" + JSONResponseKeys.httpBodyKeys[i] + "\": ")
+            
+            // if it isn't either latitude or longitude, add quotation marks around the value
+            if i < (values.count - 2) {
+                httpBody += ("\"" + values[i] + "\"")
+            } else {
+                httpBody += (values[i])
+            }
+            
+            // if it isn't the last element, append a ", "
+            if i != (values.count - 1) {
+                httpBody += (", ")
+            }
+        }
+        
+        // add a closing brace '}'
+        httpBody += ("}")
+        
+        return httpBody.data(using: .utf8)
     }
     
 }

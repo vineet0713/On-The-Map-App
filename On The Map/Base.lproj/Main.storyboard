@@ -146,7 +146,7 @@
                     <navigationItem key="navigationItem" title="On The Map" id="Cfl-q9-hF2">
                         <barButtonItem key="leftBarButtonItem" image="icon_pin" id="erj-Ju-5jG">
                             <connections>
-                                <segue destination="YVw-Ji-hsR" kind="presentation" id="8JR-QU-1ns"/>
+                                <action selector="addPin:" destination="c24-su-dfd" id="HNW-P0-Sd9"/>
                             </connections>
                         </barButtonItem>
                         <barButtonItem key="rightBarButtonItem" image="icon_refresh" id="22P-QO-rLa">
@@ -157,6 +157,7 @@
                     </navigationItem>
                     <connections>
                         <outlet property="map" destination="rH5-pC-ndG" id="qRp-la-bSu"/>
+                        <segue destination="YVw-Ji-hsR" kind="presentation" identifier="mapToAddPin" id="ugZ-gP-6oj"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="cW3-0D-E8x" userLabel="First Responder" sceneMemberID="firstResponder"/>
@@ -336,7 +337,7 @@
                     <navigationItem key="navigationItem" title="On The Map" id="pVp-mG-hUi">
                         <barButtonItem key="leftBarButtonItem" image="icon_pin" id="iKJ-mb-dsx">
                             <connections>
-                                <segue destination="YVw-Ji-hsR" kind="presentation" id="szC-0m-JYc"/>
+                                <action selector="addPin:" destination="8FE-pV-XNw" id="CLa-Dx-kA7"/>
                             </connections>
                         </barButtonItem>
                         <barButtonItem key="rightBarButtonItem" image="icon_refresh" id="gNJ-mI-bRT">
@@ -345,6 +346,9 @@
                             </connections>
                         </barButtonItem>
                     </navigationItem>
+                    <connections>
+                        <segue destination="YVw-Ji-hsR" kind="presentation" identifier="listToAddPin" id="ouF-bS-SfE"/>
+                    </connections>
                 </tableViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="uxG-rg-T22" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
@@ -376,6 +380,6 @@
         <image name="logo-u" width="62" height="62"/>
     </resources>
     <inferredMetricsTieBreakers>
-        <segue reference="8JR-QU-1ns"/>
+        <segue reference="ugZ-gP-6oj"/>
     </inferredMetricsTieBreakers>
 </document>

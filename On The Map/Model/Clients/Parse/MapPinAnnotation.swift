@@ -14,12 +14,16 @@ class MapPinAnnotation: NSObject, MKAnnotation {
     var title: String?
     var subtitle: String?
     var coordinate: CLLocationCoordinate2D
+    var objectId: String?
+    var uniqueKey: String?
     var mapString: String?
     
-    init(title: String?, subtitle: String?, coordinate: CLLocationCoordinate2D/*, uniqueKey: Int?*/, mapString: String?) {
+    init(title: String?, subtitle: String?, coordinate: CLLocationCoordinate2D, objectId: String?, uniqueKey: String?, mapString: String?) {
         self.title = title
         self.subtitle = subtitle
         self.coordinate = coordinate
+        self.objectId = objectId
+        self.uniqueKey = uniqueKey
         self.mapString = mapString
     }
     

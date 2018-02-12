@@ -185,7 +185,6 @@
 			children = (
 				65E51DEE202F9F9800C7A2CD /* LoginViewController.swift */,
 				65E51E28202FDA3000C7A2CD /* MapViewController.swift */,
-				65CB7CE12030BBD2005A71CD /* MapPinAnnotation.swift */,
 				65E51E2A202FDA6100C7A2CD /* ListTableViewController.swift */,
 				65FEC11C20310D900001B316 /* AddPinViewController.swift */,
 			);
@@ -214,6 +213,7 @@
 		65E51E21202FC0D000C7A2CD /* Parse */ = {
 			isa = PBXGroup;
 			children = (
+				65CB7CE12030BBD2005A71CD /* MapPinAnnotation.swift */,
 				65CB7CDB2030B4A5005A71CD /* ParseConstants.swift */,
 				65CB7CDD2030B4B5005A71CD /* ParseClient.swift */,
 				65CB7CDF2030B6BC005A71CD /* ParseConvenience.swift */,

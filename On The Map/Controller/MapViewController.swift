@@ -19,6 +19,8 @@ class MapViewController: UIViewController {
     let latitudinalDist: CLLocationDistance = 5000000   // represents 5 million meters, or 5 thousand kilometers
     let longitudinalDist: CLLocationDistance = 5000000  // represents 5 million meters, or 5 thousand kilometers
     
+    let dupPinMsg = "You have already posted a student location. Would you like to overwrite this location?"
+    
     /*
     var selectedPin: MKAnnotation? = nil
     */
@@ -44,13 +46,17 @@ class MapViewController: UIViewController {
     
     func updateLocations() {
         ParseClient.sharedInstance().getLocations { (success, errorString) in
-            if success {
-                performUIUpdatesOnMain {
-                    self.map.addAnnotations(ParseClient.students)
+            performUIUpdatesOnMain {
+                if success {
+                    // clears the current annotations from the map
+                    let currentAnnotations = self.map.annotations
+                    self.map.removeAnnotations(currentAnnotations)
+                    // adds the new annotations to the map:
+                    self.map.addAnnotations(ParseClient.sharedInstance().students)
+                } else {
+                    print(errorString!)
+                    self.showAlert(title: "Unable to Load", message: errorString!)
                 }
-            } else {
-                print(errorString!)
-                self.showAlert(title: "Unable to Load", message: errorString!)
             }
         }
     }
@@ -61,6 +67,19 @@ class MapViewController: UIViewController {
     }
     
     // MARK: IBActions
+    
+    @IBAction func addPin(_ sender: Any) {
+        if ParseClient.sharedInstance().userAlreadyPostedAPin() {
+            let alert = UIAlertController(title: "Duplicate Pin", message: dupPinMsg, preferredStyle: .alert)
+            alert.addAction(UIAlertAction(title: "No", style: .cancel, handler: nil))
+            alert.addAction(UIAlertAction(title: "Yes", style: .`default`, handler: { (action) in
+                self.performSegue(withIdentifier: "mapToAddPin", sender: self)
+            }))
+            present(alert, animated: true, completion: nil)
+        } else {
+            self.performSegue(withIdentifier: "mapToAddPin", sender: self)
+        }
+    }
     
     @IBAction func refresh(_ sender: Any) {
         setDefaultRegion()

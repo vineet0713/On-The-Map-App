@@ -80,7 +80,7 @@ class AddPinViewController: UIViewController {
                                   locationField.text!, linkField.text!, latitude!, longitude!]
             
             // add the pin!
-            ParseClient.sharedInstance().postLocation(httpBodyDictValues: httpBodyValues, completionHandler: { (success, errorString) in
+            sharedParseClient.postLocation(httpBodyDictValues: httpBodyValues, completionHandler: { (success, errorString) in
                 performUIUpdatesOnMain {
                     if success {
                         self.dismiss(animated: true, completion: nil)

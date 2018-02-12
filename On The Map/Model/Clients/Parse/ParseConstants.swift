@@ -70,9 +70,10 @@ extension ParseClient {
         static let MediaURL = "mediaURL"
         static let Latitude = "latitude"
         static let Longitude = "longitude"
-        static let MapString = "mapString"
         static let UniqueKey = "uniqueKey"
+        static let MapString = "mapString"
         static let httpBodyKeys = [UniqueKey, FirstName, LastName, MapString, MediaURL, Latitude, Longitude]
+        static let ObjectID = "objectId"
         // MARK: General
         static let StatusMessage = "status_message"
         static let StatusCode = "status_code"

@@ -46,7 +46,7 @@ extension ParseClient {
                 return
             }
             
-            ParseClient.students = []
+            self.students = []
             for student in arrayOfStudentDicts {
                 guard let first = student[JSONResponseKeys.FirstName] as? String, let last = student[JSONResponseKeys.LastName] as? String else {
                     completionHandler(false, "Could not parse the first and last names from the student JSON.")
@@ -64,10 +64,15 @@ extension ParseClient {
                     completionHandler(false, "Could not parse the longitude from the student JSON.")
                     return
                 }
-                /*guard let uniqueKey = student["uniqueKey"] as? Int else {
-                    authCompletionHandler(false, "Could not parse the unique key from the student JSON.")
+                guard let objectId = student[JSONResponseKeys.ObjectID] as? String else {
+                    completionHandler(false, "Could not parse the object ID from the student JSON.")
                     return
-                }*/
+                }
+                guard let uniqueKey = student[JSONResponseKeys.UniqueKey] as? String else {
+                    completionHandler(false, "Could not parse the unique key from the student JSON.")
+                    return
+                }
+                
                 let mapString: String?
                 if let string = student[JSONResponseKeys.MapString] as? String {
                     mapString = string
@@ -77,7 +82,7 @@ extension ParseClient {
                 
                 let studentTitle = "\(first) \(last)"
                 let studentCoor = CLLocationCoordinate2D(latitude: lat, longitude: long)
-                ParseClient.students.append(MapPinAnnotation(title: studentTitle, subtitle: media, coordinate: studentCoor, mapString: mapString))
+                self.students.append(MapPinAnnotation(title: studentTitle, subtitle: media, coordinate: studentCoor, objectId: objectId, uniqueKey: uniqueKey, mapString: mapString))
             }
             
             completionHandler(true, nil)
@@ -87,8 +92,10 @@ extension ParseClient {
     }
     
     func postLocation(httpBodyDictValues: [String], completionHandler: @escaping (_ success: Bool, _ errorString: String?)->Void) {
-        var request = URLRequest(url: parseURLWithMethod(method: Methods.Classes + Methods.StudentLocation))
-        request.httpMethod = "POST"
+        print(Methods.Classes + Methods.StudentLocation + putPathExtension!)
+        print(updateLocationHTTPMethod!)
+        var request = URLRequest(url: parseURLWithMethod(method: Methods.Classes + Methods.StudentLocation + putPathExtension!))
+        request.httpMethod = updateLocationHTTPMethod!
         request.addValue(Constants.ApplicationID, forHTTPHeaderField: "X-Parse-Application-Id")
         request.addValue(Constants.RESTAPIKey, forHTTPHeaderField: "X-Parse-REST-API-Key")
         request.addValue("application/json", forHTTPHeaderField: "Content-Type")
@@ -107,29 +114,17 @@ extension ParseClient {
         task.resume()
     }
     
-    func getHTTPBody(values: [String]) -> Data? {
-        var httpBody = "{"
-        
-        for i in 0..<values.count {
-            httpBody += ("\"" + JSONResponseKeys.httpBodyKeys[i] + "\": ")
-            
-            // if it isn't either latitude or longitude, add quotation marks around the value
-            if i < (values.count - 2) {
-                httpBody += ("\"" + values[i] + "\"")
-            } else {
-                httpBody += (values[i])
-            }
-            
-            // if it isn't the last element, append a ", "
-            if i != (values.count - 1) {
-                httpBody += (", ")
+    func userAlreadyPostedAPin() -> Bool {
+        for student in students {
+            if student.uniqueKey! == uniqueKey! {
+                putPathExtension = "/\(student.objectId!)"
+                updateLocationHTTPMethod = "PUT"
+                return true
             }
         }
-        
-        // add a closing brace '}'
-        httpBody += ("}")
-        
-        return httpBody.data(using: .utf8)
+        putPathExtension = ""
+        updateLocationHTTPMethod = "POST"
+        return false
     }
     
 }
