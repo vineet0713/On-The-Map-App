@@ -80,7 +80,7 @@ class AddPinViewController: UIViewController {
                                   locationField.text!, linkField.text!, latitude!, longitude!]
             
             // add the pin!
-            sharedParseClient.postLocation(httpBodyDictValues: httpBodyValues, completionHandler: { (success, errorString) in
+            sharedParseClient.updateLocation(httpBodyDictValues: httpBodyValues, completionHandler: { (success, errorString) in
                 performUIUpdatesOnMain {
                     if success {
                         self.dismiss(animated: true, completion: nil)
@@ -187,7 +187,6 @@ extension AddPinViewController {
     func subscribeToKeyboardNotifications() {
         NotificationCenter.default.addObserver(self, selector: #selector(keyboardWillShow(_:)), name: .UIKeyboardWillShow, object: nil)
         NotificationCenter.default.addObserver(self, selector: #selector(keyboardWillHide(_:)), name: .UIKeyboardWillHide, object: nil)
-        // '.UIKeyboardWillShow' is shortened version of 'Notification.Name.UIKeyboardWillShow'
     }
     
     @objc func keyboardWillShow(_ notification: Notification) {

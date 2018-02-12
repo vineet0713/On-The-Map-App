@@ -12,6 +12,7 @@ import MapKit
 class MapViewController: UIViewController {
     
     // MARK: Properties
+    
     let centerAmericaLat: CLLocationDegrees = 39.8283
     let centerAmericaLong: CLLocationDegrees = -98.5795
     
@@ -20,10 +21,6 @@ class MapViewController: UIViewController {
     let longitudinalDist: CLLocationDistance = 5000000  // represents 5 million meters, or 5 thousand kilometers
     
     let dupPinMsg = "You have already posted a student location. Would you like to overwrite this location?"
-    
-    /*
-    var selectedPin: MKAnnotation? = nil
-    */
     
     // MARK: Outlets
     
@@ -100,26 +97,6 @@ class MapViewController: UIViewController {
 
 extension MapViewController: MKMapViewDelegate {
     
-    func mapView(_ mapView: MKMapView, didDeselect view: MKAnnotationView) {
-        /*
-        print("\n\ndeselecting\n\n")
-        // makes sure that the user didn't select another pin (which will deselect this pin!)
-        if mapView.selectedAnnotations.count > 0 {
-            print("\n\nreturn\n\n")
-            return
-        }
-        
-        let urlString = (view.annotation as! MapPinAnnotation).subtitle
-        if let url = URL(string: urlString!), UIApplication.shared.canOpenURL(url) {
-            UIApplication.shared.open(url, options: [:])
-        } else {
-            let alert = UIAlertController(title: "Invalid URL", message: "This student's media URL is invalid.", preferredStyle: .alert)
-            alert.addAction(UIAlertAction(title: NSLocalizedString("OK", comment: "Default action"), style: .`default`, handler: nil))
-            present(alert, animated: true, completion: nil)
-        }
-        */
-    }
-    
     func mapView(_ mapView: MKMapView, didSelect view: MKAnnotationView) {
         if let mapPin = view.annotation as? MapPinAnnotation {
             let urlString = mapPin.subtitle
@@ -133,34 +110,4 @@ extension MapViewController: MKMapViewDelegate {
         }
     }
     
-    /*
-    func mapView(_ mapView: MKMapView, annotationView view: MKAnnotationView, calloutAccessoryControlTapped control: UIControl) {
-        if let mapPin = view.annotation as? MapPinAnnotation {
-            let urlString = mapPin.subtitle
-            if let url = URL(string: urlString!), UIApplication.shared.canOpenURL(url) {
-                UIApplication.shared.open(url, options: [:])
-            } else {
-                let alert = UIAlertController(title: "Invalid URL", message: "This student's media URL is invalid.", preferredStyle: .alert)
-                alert.addAction(UIAlertAction(title: NSLocalizedString("OK", comment: "Default action"), style: .`default`, handler: nil))
-                present(alert, animated: true, completion: nil)
-            }
-        }
-    }
-    
-    func mapView(_ mapView: MKMapView, viewFor annotation: MKAnnotation) -> MKAnnotationView? {
-        print("1")
-        let annotationView = MKAnnotationView(annotation: annotation, reuseIdentifier: "selected pin")
-        annotationView.canShowCallout = true
-        
-        let label = UILabel()
-        label.frame.size.width = 50
-        label.frame.size.height = 25
-        label.backgroundColor = .red
-        label.text = (annotation as! MapPinAnnotation).subtitle
-        annotationView.detailCalloutAccessoryView = label
-        
-        print("2")
-        return annotationView
-    }
-    */
 }

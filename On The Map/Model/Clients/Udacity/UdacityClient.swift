@@ -17,21 +17,14 @@ class UdacityClient: NSObject {
     // shared session
     var session = URLSession.shared
     
-    // authentication state
-    // var requestToken: String? = nil
     var accountKey: String? = nil
     var sessionID: String? = nil
-    // var userID: Int? = nil
     
     // MARK: Initializers
     
     override init() {
         super.init()
     }
-    
-    // MARK: GET
-    
-    
     
     // MARK: Shared Instance
     
@@ -42,13 +35,14 @@ class UdacityClient: NSObject {
         return Singleton.sharedInstance
     }
     
+    // MARK: Helper Function
+    
     // create a URL from parameters
     func udacityURLWithMethod(method: String) -> URL {
         var components = URLComponents()
         components.scheme = Constants.ApiScheme
         components.host = Constants.ApiHost
         components.path = Constants.ApiPath + method
-        
         return components.url!
     }
     

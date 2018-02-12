@@ -17,32 +17,10 @@ class ListTableViewController: UITableViewController {
     
     // MARK: Life Cycle
     
-    override func viewDidLoad() {
-        super.viewDidLoad()
-
-        // Uncomment the following line to preserve selection between presentations
-        // self.clearsSelectionOnViewWillAppear = false
-
-        // Uncomment the following line to display an Edit button in the navigation bar for this view controller.
-        // self.navigationItem.rightBarButtonItem = self.editButtonItem
-    }
-    
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         
         updateLocations()
-    }
-    
-    func updateLocations() {
-        ParseClient.sharedInstance().getLocations { (success, errorString) in
-            if success {
-                performUIUpdatesOnMain {
-                    self.tableView.reloadData()
-                }
-            } else {
-                print(errorString!)
-            }
-        }
     }
     
     // MARK: IBActions
@@ -62,6 +40,20 @@ class ListTableViewController: UITableViewController {
     
     @IBAction func refresh(_ sender: Any) {
         updateLocations()
+    }
+    
+    // MARK: Helper Function
+    
+    func updateLocations() {
+        ParseClient.sharedInstance().getLocations { (success, errorString) in
+            if success {
+                performUIUpdatesOnMain {
+                    self.tableView.reloadData()
+                }
+            } else {
+                print(errorString!)
+            }
+        }
     }
     
     // MARK: - Table view data source
@@ -93,14 +85,4 @@ class ListTableViewController: UITableViewController {
         }
     }
     
-    /*
-    // MARK: - Navigation
-
-    // In a storyboard-based application, you will often want to do a little preparation before navigation
-    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        // Get the new view controller using segue.destinationViewController.
-        // Pass the selected object to the new view controller.
-    }
-    */
-
 }

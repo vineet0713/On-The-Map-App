@@ -11,6 +11,8 @@ import UIKit
 
 extension UdacityClient {
     
+    // MARK: Authentication Method
+    
     func authenticateWith(_ username: String, _ password: String, authCompletionHandler: @escaping (_ success: Bool, _ errorString: String?)->Void) {
         var request = URLRequest(url: udacityURLWithMethod(method: Methods.Session))
         request.httpMethod = "POST"
@@ -43,7 +45,6 @@ extension UdacityClient {
                 authCompletionHandler(false, "Could not parse the data as JSON.")
                 return
             }
-            print(parsedResult)
             
             guard let accountDict = parsedResult[JSONResponseKeys.Account] as? [String:Any] else {
                 authCompletionHandler(false, "Could not parse account JSON.")
@@ -79,6 +80,8 @@ extension UdacityClient {
         task.resume()
     }
     
+    // MARK: Load User Data Method
+    
     func loadUserData(completionHandler: @escaping (_ success: Bool, _ errorString: String?)->Void) {
         let request = URLRequest(url: udacityURLWithMethod(method: Methods.Users + "/\(UdacityClient.sharedInstance().accountKey!)"))
         
@@ -107,7 +110,6 @@ extension UdacityClient {
                 completionHandler(false, "Could not parse the data as JSON.")
                 return
             }
-            print(parsedResult)
             
             guard let userDict = parsedResult[JSONResponseKeys.User] as? [String:Any] else {
                 completionHandler(false, "Could not parse the user JSON.")

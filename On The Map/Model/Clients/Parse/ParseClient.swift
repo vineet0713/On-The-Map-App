@@ -23,7 +23,7 @@ class ParseClient: NSObject {
     // shared session
     var session = URLSession.shared
     
-    // data
+    // stored data
     var students: [MapPinAnnotation] = []
     
     // MARK: Initializers
@@ -40,6 +40,8 @@ class ParseClient: NSObject {
         }
         return Singleton.sharedInstance
     }
+    
+    // MARK: Helper Functions
     
     // create a URL from parameters
     func parseURLWithMethod(method: String) -> URL {
@@ -75,6 +77,20 @@ class ParseClient: NSObject {
         httpBody += ("}")
         
         return httpBody.data(using: .utf8)
+    }
+    
+    // checks if the user has already posted a pin
+    func userAlreadyPostedAPin() -> Bool {
+        for student in students {
+            if student.uniqueKey! == uniqueKey! {
+                putPathExtension = "/\(student.objectId!)"
+                updateLocationHTTPMethod = "PUT"
+                return true
+            }
+        }
+        putPathExtension = ""
+        updateLocationHTTPMethod = "POST"
+        return false
     }
     
 }

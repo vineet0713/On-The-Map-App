@@ -11,6 +11,8 @@ import MapKit
 
 extension ParseClient {
     
+    // MARK: Get Locations Method
+    
     func getLocations(completionHandler: @escaping (_ success: Bool, _ errorString: String?)->Void) {
         var request = URLRequest(url: parseURLWithMethod(method: Methods.Classes + Methods.StudentLocation))
         request.addValue(Constants.ApplicationID, forHTTPHeaderField: "X-Parse-Application-Id")
@@ -39,7 +41,6 @@ extension ParseClient {
                 completionHandler(false, "Could not parse the data as JSON.")
                 return
             }
-            print(parsedResult)
             
             guard let arrayOfStudentDicts = parsedResult[JSONResponseKeys.Results] as? [[String:Any]] else {
                 completionHandler(false, "Could not parse the data as array of dictionaries.")
@@ -91,9 +92,9 @@ extension ParseClient {
         task.resume()
     }
     
-    func postLocation(httpBodyDictValues: [String], completionHandler: @escaping (_ success: Bool, _ errorString: String?)->Void) {
-        print(Methods.Classes + Methods.StudentLocation + putPathExtension!)
-        print(updateLocationHTTPMethod!)
+    // MARK: POST/PUT Method for Locations
+    
+    func updateLocation(httpBodyDictValues: [String], completionHandler: @escaping (_ success: Bool, _ errorString: String?)->Void) {
         var request = URLRequest(url: parseURLWithMethod(method: Methods.Classes + Methods.StudentLocation + putPathExtension!))
         request.httpMethod = updateLocationHTTPMethod!
         request.addValue(Constants.ApplicationID, forHTTPHeaderField: "X-Parse-Application-Id")
@@ -106,25 +107,11 @@ extension ParseClient {
                 completionHandler(false, error?.localizedDescription)
                 return
             }
-            print(String(data: data!, encoding: .utf8)!)
             
             completionHandler(true, nil)
         }
         
         task.resume()
-    }
-    
-    func userAlreadyPostedAPin() -> Bool {
-        for student in students {
-            if student.uniqueKey! == uniqueKey! {
-                putPathExtension = "/\(student.objectId!)"
-                updateLocationHTTPMethod = "PUT"
-                return true
-            }
-        }
-        putPathExtension = ""
-        updateLocationHTTPMethod = "POST"
-        return false
     }
     
 }
