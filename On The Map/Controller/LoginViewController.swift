@@ -13,6 +13,7 @@ class LoginViewController: UIViewController {
     // MARK: Properties
     
     let isSmallScreen = (UIScreen.main.bounds.height == CGFloat(568))
+    let offlineMessage = "The Internet connection appears to be offline."
     
     // MARK: Outlets
     
@@ -63,7 +64,11 @@ class LoginViewController: UIViewController {
                         self.completeLogin()
                     } else {
                         print(errorString!)
-                        self.showAlert(title: "Invalid Login", message: "The username and/or password you entered was incorrect.")
+                        if errorString! == self.offlineMessage {
+                            self.showAlert(title: "No Connection", message: self.offlineMessage)
+                        } else {
+                            self.showAlert(title: "Invalid Login", message: "The username and/or password you entered was incorrect.")
+                        }
                     }
                 }
             })
