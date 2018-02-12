@@ -46,10 +46,6 @@ class ListTableViewController: UITableViewController {
     
     // MARK: IBActions
     
-    @IBAction func postPin(_ sender: Any) {
-        print("List Post Pin")
-    }
-    
     @IBAction func refresh(_ sender: Any) {
         updateLocations()
     }

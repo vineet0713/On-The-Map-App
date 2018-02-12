@@ -26,6 +26,7 @@
 		65E51E29202FDA3000C7A2CD /* MapViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 65E51E28202FDA3000C7A2CD /* MapViewController.swift */; };
 		65E51E2B202FDA6100C7A2CD /* ListTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 65E51E2A202FDA6100C7A2CD /* ListTableViewController.swift */; };
 		65E51E2D202FDD4600C7A2CD /* ListTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 65E51E2C202FDD4600C7A2CD /* ListTableViewCell.swift */; };
+		65FEC11D20310D900001B316 /* AddPinViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 65FEC11C20310D900001B316 /* AddPinViewController.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -71,6 +72,7 @@
 		65E51E28202FDA3000C7A2CD /* MapViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MapViewController.swift; sourceTree = "<group>"; };
 		65E51E2A202FDA6100C7A2CD /* ListTableViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ListTableViewController.swift; sourceTree = "<group>"; };
 		65E51E2C202FDD4600C7A2CD /* ListTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ListTableViewCell.swift; sourceTree = "<group>"; };
+		65FEC11C20310D900001B316 /* AddPinViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddPinViewController.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -185,6 +187,7 @@
 				65E51E28202FDA3000C7A2CD /* MapViewController.swift */,
 				65CB7CE12030BBD2005A71CD /* MapPinAnnotation.swift */,
 				65E51E2A202FDA6100C7A2CD /* ListTableViewController.swift */,
+				65FEC11C20310D900001B316 /* AddPinViewController.swift */,
 			);
 			path = Controller;
 			sourceTree = "<group>";
@@ -363,6 +366,7 @@
 				65E51E23202FC16100C7A2CD /* UdacityConstants.swift in Sources */,
 				65CB7CDC2030B4A5005A71CD /* ParseConstants.swift in Sources */,
 				65E51E2B202FDA6100C7A2CD /* ListTableViewController.swift in Sources */,
+				65FEC11D20310D900001B316 /* AddPinViewController.swift in Sources */,
 				65E51E1B202FC02D00C7A2CD /* GCDBlackBox.swift in Sources */,
 				65E51E2D202FDD4600C7A2CD /* ListTableViewCell.swift in Sources */,
 				65E51DED202F9F9800C7A2CD /* AppDelegate.swift in Sources */,

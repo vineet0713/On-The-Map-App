@@ -14,8 +14,10 @@ class MapViewController: UIViewController {
     // MARK: Properties
     let centerAmericaLat: CLLocationDegrees = 39.8283
     let centerAmericaLong: CLLocationDegrees = -98.5795
-    // represents 5 million meters, or 5 thousand kilometers
-    let fiveMillionM: CLLocationDistance = 5000000
+    
+    // sets the latitudinal and longitudinal distances (for setting map region)
+    let latitudinalDist: CLLocationDistance = 5000000   // represents 5 million meters, or 5 thousand kilometers
+    let longitudinalDist: CLLocationDistance = 5000000  // represents 5 million meters, or 5 thousand kilometers
     
     /*
     var selectedPin: MKAnnotation? = nil
@@ -44,7 +46,7 @@ class MapViewController: UIViewController {
             if success {
                 performUIUpdatesOnMain {
                     let regionLocation = CLLocationCoordinate2DMake(self.centerAmericaLat, self.centerAmericaLong)
-                    self.map.setRegion(MKCoordinateRegionMakeWithDistance(regionLocation, self.fiveMillionM, self.fiveMillionM), animated: true)
+                    self.map.setRegion(MKCoordinateRegionMakeWithDistance(regionLocation, self.latitudinalDist, self.longitudinalDist), animated: true)
                     self.map.addAnnotations(ParseClient.students)
                 }
             } else {
@@ -54,10 +56,6 @@ class MapViewController: UIViewController {
     }
     
     // MARK: IBActions
-    
-    @IBAction func postPin(_ sender: Any) {
-        print("Map Post Pin")
-    }
     
     @IBAction func refresh(_ sender: Any) {
         updateLocations()
