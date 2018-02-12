@@ -17,13 +17,14 @@ extension ParseClient {
         static let RESTAPIKey = "QuWThTdiRmTux3YaDseUSEpUKo7aBYM737yKd4gY"
         // MARK: URLs
         static let ApiScheme = "https"
-        static let ApiHost = "api.themoviedb.org"
-        static let ApiPath = "/api"
-        static let BaseURL = "https://parse.udacity.com/parse/classes"
+        static let ApiHost = "parse.udacity.com"
+        static let ApiPath = "/parse"
     }
     
     // MARK: Methods
     struct Methods {
+        // MARK: Classes
+        static let Classes = "/classes"
         // MARK: Account
         static let StudentLocation = "/StudentLocation"
         static let AccountIDFavoriteMovies = "/account/{id}/favorite/movies"
@@ -62,6 +63,16 @@ extension ParseClient {
     
     // MARK: JSON Response Keys
     struct JSONResponseKeys {
+        // MARK: Location
+        static let Results = "results"
+        static let FirstName = "firstName"
+        static let LastName = "lastName"
+        static let MediaURL = "mediaURL"
+        static let Latitude = "latitude"
+        static let Longitude = "longitude"
+        static let MapString = "mapString"
+        static let UniqueKey = "uniqueKey"
+        static let httpBodyKeys = [UniqueKey, FirstName, LastName, MapString, MediaURL, Latitude, Longitude]
         // MARK: General
         static let StatusMessage = "status_message"
         static let StatusCode = "status_code"
@@ -86,5 +97,7 @@ extension ParseClient {
         static let MovieReleaseYear = "release_year"
         static let MovieResults = "results"
     }
+    
+    
     
 }

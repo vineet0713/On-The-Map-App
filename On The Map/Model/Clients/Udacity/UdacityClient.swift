@@ -19,8 +19,8 @@ class UdacityClient: NSObject {
     
     // authentication state
     // var requestToken: String? = nil
-    static var accountKey: String? = nil
-    static var sessionID: String? = nil
+    var accountKey: String? = nil
+    var sessionID: String? = nil
     // var userID: Int? = nil
     
     // MARK: Initializers
@@ -40,6 +40,16 @@ class UdacityClient: NSObject {
             static var sharedInstance = UdacityClient()
         }
         return Singleton.sharedInstance
+    }
+    
+    // create a URL from parameters
+    func udacityURLWithMethod(method: String) -> URL {
+        var components = URLComponents()
+        components.scheme = Constants.ApiScheme
+        components.host = Constants.ApiHost
+        components.path = Constants.ApiPath + method
+        
+        return components.url!
     }
     
 }

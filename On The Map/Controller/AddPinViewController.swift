@@ -17,6 +17,9 @@ class AddPinViewController: UIViewController {
     let bottomFieldTag = 1
     var bottomEditing = false
     
+    var latitude: String? = nil
+    var longitude: String? = nil
+    
     // sets the latitudinal and longitudinal distances (for setting map region)
     let latitudinalDist: CLLocationDistance = 500
     let longitudinalDist: CLLocationDistance = 500
@@ -71,8 +74,21 @@ class AddPinViewController: UIViewController {
             linkField.text = ""
             updateAddButtonEnabled()
         } else {
-            // add the pin!
+            // create the HTTP Body values for the POST method
+            let sharedParseClient = ParseClient.sharedInstance()
+            let httpBodyValues: [String] = [sharedParseClient.uniqueKey!, sharedParseClient.firstName!, sharedParseClient.lastName!,
+                                  locationField.text!, linkField.text!, latitude!, longitude!]
             
+            // add the pin!
+            ParseClient.sharedInstance().postLocation(httpBodyDictValues: httpBodyValues, completionHandler: { (success, errorString) in
+                performUIUpdatesOnMain {
+                    if success {
+                        self.dismiss(animated: true, completion: nil)
+                    } else {
+                        self.showAlert(title: "Could Not Add Pin", message: errorString!)
+                    }
+                }
+            })
         }
     }
     
@@ -112,6 +128,10 @@ class AddPinViewController: UIViewController {
             // get the data
             let latitude = response!.boundingRegion.center.latitude
             let longitude = response!.boundingRegion.center.longitude
+            
+            // save the latitude and longitude
+            self.latitude = "\(latitude)"
+            self.longitude = "\(longitude)"
             
             // create the annotation
             let newAnnotation = MKPointAnnotation()

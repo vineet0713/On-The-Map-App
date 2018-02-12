@@ -18,14 +18,18 @@ extension UdacityClient {
         static let ApiKey = "3f8b54020c01ca955d794509d39e94fe" /*"YOUR_API_KEY_HERE"*/
         // MARK: URLs
         static let ApiScheme = "https"
-        static let ApiHost = "api.themoviedb.org"
+        static let ApiHost = "www.udacity.com"
         static let ApiPath = "/api"
-        static let AuthorizationURL = "https://www.udacity.com/api/session"
         static let AccountURL = "https://www.themoviedb.org/account/"
     }
     
     // MARK: Methods
     struct Methods {
+        // MARK: Session
+        static let Session = "/session"
+        // MARK: Session
+        static let Users = "/users"
+        
         // MARK: Account
         static let Account = "/account"
         static let AccountIDFavoriteMovies = "/account/{id}/favorite/movies"
@@ -67,13 +71,19 @@ extension UdacityClient {
         // MARK: General
         static let StatusMessage = "status_message"
         static let StatusCode = "status_code"
-        // MARK: Authorization
+        
+        // MARK: Authentication
         static let Account = "account"
         static let Session = "session"
         static let Registered = "registered"
-        static let SessionID = "id"
-        // MARK: Account
         static let AccountKey = "key"
+        static let SessionID = "id"
+        // MARK: Get User Information
+        static let User = "user"
+        static let FirstName = "first_name"
+        static let LastName = "last_name"
+        static let UniqueKey = "key"
+        
         // MARK: Config
         static let ConfigBaseImageURL = "base_url"
         static let ConfigSecureBaseImageURL = "secure_base_url"

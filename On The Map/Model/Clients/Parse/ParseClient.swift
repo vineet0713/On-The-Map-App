@@ -13,6 +13,9 @@ import Foundation
 class ParseClient: NSObject {
     
     // MARK: Properties
+    var uniqueKey: String? = nil
+    var firstName: String? = nil
+    var lastName: String? = nil
     
     // shared session
     var session = URLSession.shared
@@ -33,6 +36,16 @@ class ParseClient: NSObject {
             static var sharedInstance = ParseClient()
         }
         return Singleton.sharedInstance
+    }
+    
+    // create a URL from parameters
+    func parseURLWithMethod(method: String) -> URL {
+        var components = URLComponents()
+        components.scheme = Constants.ApiScheme
+        components.host = Constants.ApiHost
+        components.path = Constants.ApiPath + method
+        
+        return components.url!
     }
     
 }

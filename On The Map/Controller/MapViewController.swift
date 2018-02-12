@@ -33,10 +33,11 @@ class MapViewController: UIViewController {
         super.viewDidLoad()
         
         map.delegate = self
+        setDefaultRegion()
     }
     
-    override func viewDidAppear(_ animated: Bool) {
-        super.viewDidAppear(animated)
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
         
         updateLocations()
     }
@@ -45,28 +46,33 @@ class MapViewController: UIViewController {
         ParseClient.sharedInstance().getLocations { (success, errorString) in
             if success {
                 performUIUpdatesOnMain {
-                    let regionLocation = CLLocationCoordinate2DMake(self.centerAmericaLat, self.centerAmericaLong)
-                    self.map.setRegion(MKCoordinateRegionMakeWithDistance(regionLocation, self.latitudinalDist, self.longitudinalDist), animated: true)
                     self.map.addAnnotations(ParseClient.students)
                 }
             } else {
                 print(errorString!)
+                self.showAlert(title: "Unable to Load", message: errorString!)
             }
         }
+    }
+    
+    func setDefaultRegion() {
+        let regionLocation = CLLocationCoordinate2DMake(centerAmericaLat, centerAmericaLong)
+        map.setRegion(MKCoordinateRegionMakeWithDistance(regionLocation, latitudinalDist, longitudinalDist), animated: true)
     }
     
     // MARK: IBActions
     
     @IBAction func refresh(_ sender: Any) {
+        setDefaultRegion()
         updateLocations()
     }
     
-    // MARK: - Navigation
+    // MARK: Helper Functions
     
-    // In a storyboard-based application, you will often want to do a little preparation before navigation
-    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        // Get the new view controller using segue.destinationViewController.
-        // Pass the selected object to the new view controller.
+    func showAlert(title: String, message: String) {
+        let alert = UIAlertController(title: title, message: message, preferredStyle: .alert)
+        alert.addAction(UIAlertAction(title: NSLocalizedString("OK", comment: "Default action"), style: .`default`, handler: nil))
+        self.present(alert, animated: true, completion: nil)
     }
     
 }

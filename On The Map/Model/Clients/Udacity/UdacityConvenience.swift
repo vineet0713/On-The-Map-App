@@ -12,8 +12,7 @@ import UIKit
 extension UdacityClient {
     
     func authenticateWith(_ username: String, _ password: String, authCompletionHandler: @escaping (_ success: Bool, _ errorString: String?)->Void) {
-        var request = URLRequest(url: URL(string: Constants.AuthorizationURL)!)
-        
+        var request = URLRequest(url: udacityURLWithMethod(method: Methods.Session))
         request.httpMethod = "POST"
         request.addValue("application/json", forHTTPHeaderField: "Accept")
         request.addValue("application/json", forHTTPHeaderField: "Content-Type")
@@ -44,6 +43,7 @@ extension UdacityClient {
                 authCompletionHandler(false, "Could not parse the data as JSON.")
                 return
             }
+            print(parsedResult)
             
             guard let accountDict = parsedResult[JSONResponseKeys.Account] as? [String:Any] else {
                 authCompletionHandler(false, "Could not parse account JSON.")
@@ -70,10 +70,70 @@ extension UdacityClient {
                 return
             }
             
-            UdacityClient.accountKey = accountKey
-            UdacityClient.sessionID = sessionID
+            UdacityClient.sharedInstance().accountKey = accountKey
+            UdacityClient.sharedInstance().sessionID = sessionID
             
             authCompletionHandler(true, nil)
+        }
+        
+        task.resume()
+    }
+    
+    func loadUserData(completionHandler: @escaping (_ success: Bool, _ errorString: String?)->Void) {
+        let request = URLRequest(url: udacityURLWithMethod(method: Methods.Users + "/\(UdacityClient.sharedInstance().accountKey!)"))
+        
+        let task = session.dataTask(with: request) { data, response, error in
+            if error != nil {
+                completionHandler(false, error?.localizedDescription)
+                return
+            }
+            
+            guard let statusCode = (response as? HTTPURLResponse)?.statusCode, (statusCode >= 200 && statusCode <= 299) else {
+                completionHandler(false, "Your request returned a status code other than 2xx.")
+                return
+            }
+            
+            let range = Range(5..<data!.count)
+            let newData = data?.subdata(in: range) /* subset response data! */
+            guard let data = newData else {
+                completionHandler(false, "No data was returned.")
+                return
+            }
+            
+            var parsedResult: [String:Any]
+            do {
+                parsedResult = try JSONSerialization.jsonObject(with: data, options: .allowFragments) as! [String:Any]
+            } catch {
+                completionHandler(false, "Could not parse the data as JSON.")
+                return
+            }
+            print(parsedResult)
+            
+            guard let userDict = parsedResult[JSONResponseKeys.User] as? [String:Any] else {
+                completionHandler(false, "Could not parse the user JSON.")
+                return
+            }
+            
+            guard let firstName = userDict[JSONResponseKeys.FirstName] as? String else {
+                completionHandler(false, "Could not parse the first name.")
+                return
+            }
+            
+            guard let lastName = userDict[JSONResponseKeys.LastName] as? String else {
+                completionHandler(false, "Could not parse the last name.")
+                return
+            }
+            
+            guard let uniqueKey = userDict[JSONResponseKeys.UniqueKey] as? String else {
+                completionHandler(false, "Could not parse the key.")
+                return
+            }
+            
+            ParseClient.sharedInstance().firstName = firstName
+            ParseClient.sharedInstance().lastName = lastName
+            ParseClient.sharedInstance().uniqueKey = uniqueKey
+            
+            completionHandler(true, nil)
         }
         
         task.resume()

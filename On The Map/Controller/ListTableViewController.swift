@@ -26,12 +26,6 @@ class ListTableViewController: UITableViewController {
         // self.navigationItem.rightBarButtonItem = self.editButtonItem
     }
     
-    override func viewDidAppear(_ animated: Bool) {
-        super.viewDidAppear(animated)
-        
-        updateLocations()
-    }
-    
     func updateLocations() {
         ParseClient.sharedInstance().getLocations { (success, errorString) in
             if success {

@@ -63,19 +63,30 @@ class LoginViewController: UIViewController {
                         self.completeLogin()
                     } else {
                         print(errorString!)
-                        self.invalidLogin()
+                        self.showAlert(title: "Invalid Login", message: "The username and/or password you entered was incorrect.")
                     }
                 }
             })
         }
     }
     
+    // MARK: Helper Functions
+    
     func completeLogin() {
-        performSegue(withIdentifier: "loginComplete", sender: self)
+        UdacityClient.sharedInstance().loadUserData { (success, errorString) in
+            performUIUpdatesOnMain {
+                if success {
+                    self.performSegue(withIdentifier: "loginComplete", sender: self)
+                } else {
+                    print(errorString!)
+                    self.showAlert(title: "Could Not Get User Data", message: errorString!)
+                }
+            }
+        }
     }
     
-    func invalidLogin() {
-        let alert = UIAlertController(title: "Invalid Login", message: "The username and/or password you entered was incorrect.", preferredStyle: .alert)
+    func showAlert(title: String, message: String) {
+        let alert = UIAlertController(title: title, message: message, preferredStyle: .alert)
         alert.addAction(UIAlertAction(title: NSLocalizedString("OK", comment: "Default action"), style: .`default`, handler: nil))
         self.present(alert, animated: true, completion: nil)
     }
