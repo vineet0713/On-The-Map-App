@@ -30,6 +30,7 @@ class AddPinViewController: UIViewController {
     @IBOutlet weak var locationField: UITextField!
     @IBOutlet weak var linkField: UITextField!
     @IBOutlet weak var addButton: UIButton!
+    @IBOutlet weak var geocodingIndicator: UIActivityIndicatorView!
     
     // MARK: Life Cycle
     
@@ -45,6 +46,7 @@ class AddPinViewController: UIViewController {
         super.viewWillAppear(animated)
         
         subscribeToKeyboardNotifications()
+        self.geocodingIndicator.alpha = CGFloat(0)
     }
     
     override func viewWillDisappear(_ animated: Bool) {
@@ -109,12 +111,15 @@ class AddPinViewController: UIViewController {
     }
     
     func performSearch(query: String) {
+        toggleGeocodingIndicator(turnOn: true)
+        
         let searchRequest = MKLocalSearchRequest()
         searchRequest.naturalLanguageQuery = query
         let activeSearch = MKLocalSearch(request: searchRequest)
         
         activeSearch.start { (response, error) in
             if response == nil {
+                self.toggleGeocodingIndicator(turnOn: false)
                 self.showAlert(title: "Invalid Search", message: "Your search query was invalid.")
                 self.locationField.text = ""
                 self.updateAddButtonEnabled()
@@ -142,6 +147,8 @@ class AddPinViewController: UIViewController {
             // zoom in on annotation location
             let regionLocation = CLLocationCoordinate2DMake(latitude, longitude)
             self.map.setRegion(MKCoordinateRegionMakeWithDistance(regionLocation, self.latitudinalDist, self.longitudinalDist), animated: true)
+            
+            self.toggleGeocodingIndicator(turnOn: false)
         }
     }
     
@@ -150,6 +157,16 @@ class AddPinViewController: UIViewController {
             return true
         } else {
             return false
+        }
+    }
+    
+    func toggleGeocodingIndicator(turnOn: Bool) {
+        if turnOn {
+            geocodingIndicator.alpha = CGFloat(1)
+            geocodingIndicator.startAnimating()
+        } else {
+            geocodingIndicator.stopAnimating()
+            geocodingIndicator.alpha = CGFloat(0)
         }
     }
     
