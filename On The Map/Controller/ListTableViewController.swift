@@ -67,13 +67,14 @@ class ListTableViewController: UITableViewController {
     }
     
     func updateLocations() {
-        ParseClient.sharedInstance().getLocations { (success, errorString) in
-            if success {
-                performUIUpdatesOnMain {
+        ParseClient.sharedInstance().getLocations { (success, errorTitle, errorDescription) in
+            performUIUpdatesOnMain {
+                if success || errorTitle == "Warning" {
                     self.tableView.reloadData()
                 }
-            } else {
-                print(errorString!)
+                if success == false {
+                    self.showAlert(title: errorTitle!, message: errorDescription!)
+                }
             }
         }
     }

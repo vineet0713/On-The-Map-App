@@ -42,17 +42,17 @@ class MapViewController: UIViewController {
     }
     
     func updateLocations() {
-        ParseClient.sharedInstance().getLocations { (success, errorString) in
+        ParseClient.sharedInstance().getLocations { (success, errorTitle, errorDescription) in
             performUIUpdatesOnMain {
-                if success {
+                if success || errorTitle == "Warning" {
                     // clears the current annotations from the map
                     let currentAnnotations = self.map.annotations
                     self.map.removeAnnotations(currentAnnotations)
                     // adds the new annotations to the map:
                     self.map.addAnnotations(SharedStudentData.sharedInstance().students)
-                } else {
-                    print(errorString!)
-                    self.showAlert(title: "Unable to Load", message: errorString!)
+                }
+                if success == false {
+                    self.showAlert(title: errorTitle!, message: errorDescription!)
                 }
             }
         }
@@ -113,15 +113,28 @@ class MapViewController: UIViewController {
 
 extension MapViewController: MKMapViewDelegate {
     
-    func mapView(_ mapView: MKMapView, didSelect view: MKAnnotationView) {
+    func mapView(_ mapView: MKMapView, viewFor annotation: MKAnnotation) -> MKAnnotationView? {
+        if let annotationView = mapView.dequeueReusableAnnotationView(withIdentifier: "student pin") {
+            annotationView.annotation = annotation
+            return annotationView
+        } else {
+            let annotationView = MKPinAnnotationView(annotation: annotation, reuseIdentifier: "student pin")
+            annotationView.canShowCallout = true
+            
+            // without adding this UIButton, the 'calloutAccessoryControlTapped' method would not get called!!!
+            let infoButton = UIButton(type: .detailDisclosure)
+            annotationView.rightCalloutAccessoryView = infoButton
+            
+            return annotationView
+        }
+    }
+    
+    func mapView(_ mapView: MKMapView, annotationView view: MKAnnotationView, calloutAccessoryControlTapped control: UIControl) {
         if let mapPin = view.annotation as? MapPinAnnotation {
-            let urlString = mapPin.subtitle
-            if let url = URL(string: urlString!), UIApplication.shared.canOpenURL(url) {
+            if let url = URL(string: mapPin.subtitle!), UIApplication.shared.canOpenURL(url) {
                 UIApplication.shared.open(url, options: [:])
             } else {
-                let alert = UIAlertController(title: "Invalid URL", message: "This student's media URL is invalid.", preferredStyle: .alert)
-                alert.addAction(UIAlertAction(title: NSLocalizedString("OK", comment: "Default action"), style: .`default`, handler: nil))
-                present(alert, animated: true, completion: nil)
+                showAlert(title: "Invalid URL", message: "This student's media URL is invalid.")
             }
         }
     }

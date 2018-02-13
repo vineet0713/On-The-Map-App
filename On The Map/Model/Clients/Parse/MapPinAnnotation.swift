@@ -28,30 +28,37 @@ class MapPinAnnotation: NSObject, MKAnnotation {
     // failable initializer:
     init?(studentDict: [String:Any]) {
         guard let first = studentDict[ParseClient.JSONResponseKeys.FirstName] as? String else {
+            print("Could not parse first name from student JSON.")
             return nil
         }
         guard let last = studentDict[ParseClient.JSONResponseKeys.LastName] as? String else {
+            print("Could not parse last name from student JSON.")
             return nil
         }
         let studentTitle = "\(first) \(last)"
         
         guard let media = studentDict[ParseClient.JSONResponseKeys.MediaURL] as? String else {
+            print("Could not parse media URL from student JSON.")
             return nil
         }
         
         guard let lat = studentDict[ParseClient.JSONResponseKeys.Latitude] as? CLLocationDegrees else {
+            print("Could not parse latitude from student JSON.")
             return nil
         }
         guard let long = studentDict[ParseClient.JSONResponseKeys.Longitude] as? CLLocationDegrees else {
+            print("Could not parse longitude from student JSON.")
             return nil
         }
         let studentCoor = CLLocationCoordinate2D(latitude: lat, longitude: long)
         
         guard let objectId = studentDict[ParseClient.JSONResponseKeys.ObjectID] as? String else {
+            print("Could not parse object ID from student JSON.")
             return nil
         }
         
         guard let uniqueKey = studentDict[ParseClient.JSONResponseKeys.UniqueKey] as? String else {
+            print("Could not parse unique key from student JSON.")
             return nil
         }
         

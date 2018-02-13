@@ -13,7 +13,7 @@ extension ParseClient {
     
     // MARK: Get Locations Method
     
-    func getLocations(completionHandler: @escaping (_ success: Bool, _ errorString: String?)->Void) {
+    func getLocations(completionHandler: @escaping (_ success: Bool, _ errorTitle: String?, _ errorDescription: String?)->Void) {
         let method = Methods.Classes + Methods.StudentLocation
         let parameters: [String:Any] = [ParameterKeys.Limit: ParameterValues.GivenLimit,
                                         ParameterKeys.Order: ParameterValues.newestToOldestDescending]
@@ -24,17 +24,17 @@ extension ParseClient {
         
         let task = session.dataTask(with: request) { data, response, error in
             if error != nil {
-                completionHandler(false, error?.localizedDescription)
+                completionHandler(false, "Unable To Load Data", error?.localizedDescription)
                 return
             }
             
             guard let statusCode = (response as? HTTPURLResponse)?.statusCode, (statusCode >= 200 && statusCode <= 299) else {
-                completionHandler(false, "Your request returned a status code other than 2xx.")
+                completionHandler(false, "Unable To Load Data", "Your request returned a status code other than 2xx.")
                 return
             }
             
             guard let data = data else {
-                completionHandler(false, "No data was returned.")
+                completionHandler(false, "Unable To Load Data", "No data was returned.")
                 return
             }
             
@@ -42,25 +42,34 @@ extension ParseClient {
             do {
                 parsedResult = try JSONSerialization.jsonObject(with: data, options: .allowFragments) as! [String:Any]
             } catch {
-                completionHandler(false, "Could not parse the data as JSON.")
+                completionHandler(false, "Unable To Load Data", "Could not parse the data as JSON.")
                 return
             }
             
             guard let arrayOfStudentDicts = parsedResult[JSONResponseKeys.Results] as? [[String:Any]] else {
-                completionHandler(false, "Could not parse the data as array of dictionaries.")
+                completionHandler(false, "Unable To Load Data", "Could not parse the data as array of dictionaries.")
                 return
             }
             
             SharedStudentData.sharedInstance().students = []
+            var incompleteData: Int = 0
             for student in arrayOfStudentDicts {
                 if let studentAnnotation = MapPinAnnotation(studentDict: student) {
                     SharedStudentData.sharedInstance().students.append(studentAnnotation)
                 } else {
-                    completionHandler(false, "Could not parse the data from the student JSON.")
+                    incompleteData += 1
                 }
             }
             
-            completionHandler(true, nil)
+            if incompleteData == 0 {
+                completionHandler(true, nil, nil)
+            } else {
+                if incompleteData == 1 {
+                    completionHandler(false, "Warning", "1 student could not be added due to incomplete data fields.")
+                } else {
+                    completionHandler(false, "Warning", "A total of \(incompleteData) students could not be added due to incomplete data fields.")
+                }
+            }
         }
         
         task.resume()
