@@ -130,6 +130,13 @@ extension MapViewController: MKMapViewDelegate {
     }
     
     func mapView(_ mapView: MKMapView, annotationView view: MKAnnotationView, calloutAccessoryControlTapped control: UIControl) {
+        // code review suggestion:
+        // You could also check if the user tapped the "Detail" accessory on the right of the annotation by adding the following line of code:
+        /*
+        if control == view.rightCalloutAccessoryView {
+            ...
+        }
+        */
         if let mapPin = view.annotation as? MapPinAnnotation {
             if let url = URL(string: mapPin.subtitle!), UIApplication.shared.canOpenURL(url) {
                 UIApplication.shared.open(url, options: [:])
